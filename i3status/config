@@ -15,7 +15,7 @@ order += "wireless _first_"
 order += "disk /"
 order += "cpu_usage"
 # order += "load"
-order += "cpu_temperature 0"
+# order += "cpu_temperature 0"
 order += "memory"
 order += "tztime local"
 
