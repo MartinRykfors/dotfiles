@@ -1,0 +1,7 @@
+Copyright Robert Anders
+Taken from https://www.flickr.com/photos/schwarzbrot/19240949001/
+Attribution 2.0 Generic (CC BY 2.0)
+
+Modified using imagemagick:
+convert img.jpg +level-colors ,'#4c566a' background.jpg
+convert img.jpg -negate +level-colors ,'#4c566a' background_inv.jpg
