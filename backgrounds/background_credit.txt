@@ -1,0 +1,7 @@
+Manitoba Powerlines
+Copyright Matt Wiebe
+Taken from https://www.flickr.com/photos/mattwieve/29432732582/
+Attribution 2.0 Generic (CC BY 2.0)
+
+Modified using imagemagick:
+convert img.jpg -normalize +level-colors #2e3440,'#4c566a' manitoba.jpg
