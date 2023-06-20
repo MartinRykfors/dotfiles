@@ -227,7 +227,7 @@ set $aurora4 #b48ead
 
 
 # class                 border  backgr. text    indicator child_border
-client.focused          $frost0 $night1 $snow2 $aurora3   $frost0
+client.focused          $snow0 $night1 $snow2 $aurora3   $snow0
 client.focused_inactive $frost3 $night0 $snow0 $aurora3   $frost3
 client.unfocused        $night0 $night0 $snow0 $night3   $night0
 client.urgent           $aurora0 $night0 $snow2 $aurora0   $aurora0
