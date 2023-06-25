@@ -45,9 +45,10 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 focus_follows_mouse no
 
 # Gaps and borders
-gaps inner 30px
-gaps outer 20px
-default_border pixel 3px
+gaps inner 20px
+gaps outer 0px
+default_border pixel 10px
+# default_border normal
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -227,8 +228,8 @@ set $aurora4 #b48ead
 
 
 # class                 border  backgr. text    indicator child_border
-client.focused          $snow0 $night1 $snow2 $aurora3   $snow0
-client.focused_inactive $frost3 $night0 $snow0 $aurora3   $frost3
+client.focused          $aurora3 $night1 $snow2 $aurora1 $snow0
+client.focused_inactive $frost3 $night0 $snow0  $aurora1 $frost3
 client.unfocused        $night0 $night0 $snow0 $night3   $night0
 client.urgent           $aurora0 $night0 $snow2 $aurora0   $aurora0
 client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
