@@ -45,9 +45,9 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 focus_follows_mouse no
 
 # Gaps and borders
-gaps inner 20px
+gaps inner 10px
 gaps outer 0px
-default_border pixel 10px
+default_border pixel 5px
 # default_border normal
 
 # Use Mouse+$mod to drag floating windows to their wanted position
