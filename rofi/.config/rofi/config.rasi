@@ -1,0 +1,18 @@
+configuration {
+  modi: "window,drun,run,ssh";
+  font: "URW Gothic 12";
+  fixed-num-lines: false;
+  show-icons: true;
+  drun-match-fields: "name";
+  terminal: "rofi-sensible-terminal";
+  timeout {
+      action: "kb-cancel";
+      delay:  0;
+  }
+  filebrowser {
+      directories-first: true;
+      sorting-method:    "name";
+  }
+}
+
+@theme "nord"
