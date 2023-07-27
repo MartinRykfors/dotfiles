@@ -1,6 +1,6 @@
 configuration {
   modi: "window,drun,run,ssh";
-  font: "URW Gothic 12";
+  font: "BetecknaGS 12";
   fixed-num-lines: false;
   show-icons: true;
   drun-match-fields: "name";
