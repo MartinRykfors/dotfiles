@@ -13,6 +13,9 @@ configuration {
       directories-first: true;
       sorting-method:    "name";
   }
+  hover-select: true;
+  me-select-entry: "";
+  me-accept-entry: [ MousePrimary ];
 }
 
 @theme "nord"

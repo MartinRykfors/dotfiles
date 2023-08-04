@@ -55,9 +55,8 @@ window {
     background-color: @background;
     border:           5;
     padding:          5;
-    anchor: north;
-    location: north;
-    y-offset: 100;
+    anchor: center;
+    location: center;
 }
 mainbox {
     border:  0;
