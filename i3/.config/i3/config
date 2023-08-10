@@ -51,7 +51,8 @@ focus_follows_mouse no
 gaps inner 10px
 gaps outer 0px
 default_border pixel 5px
-# default_border normal
+smart_gaps on
+smart_borders on
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
