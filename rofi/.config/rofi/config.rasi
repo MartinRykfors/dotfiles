@@ -1,6 +1,6 @@
 configuration {
   modi: "window,drun,run,ssh";
-  font: "BetecknaGS 12";
+  font: "League Spartan 12";
   fixed-num-lines: false;
   show-icons: true;
   drun-match-fields: "name";

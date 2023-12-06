@@ -1,0 +1,9 @@
+[Service]
+Type=oneshot
+RemainAfterExit=true
+StandardOutput=journal
+ExecStart=%h/talon/run.sh
+
+[Install]
+WantedBy=graphical-session.target
+

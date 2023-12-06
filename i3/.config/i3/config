@@ -243,6 +243,8 @@ client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 client.background       #ffffff
 
 exec firefox
+exec_always --no-startup-id snixembed
 exec_always --no-startup-id ~/.config/polybar/i3_bar.sh
 exec_always --no-startup-id feh --bg-fill ~/backgrounds/manitoba.jpg
 exec_always --no-startup-id picom  -b --config ~/.config/picom/picom.conf
+exec --no-startup-id systemctl --user start i3-session.service
