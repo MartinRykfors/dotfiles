@@ -60,6 +60,9 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
+# start nemo file browser
+bindsym $mod+f exec --no-startup-id nemo
+bindsym $mod+Shift+f exec --no-startup-id nemo
 # start dmenu (a program launcher)
 # bindsym $mod+e exec --no-startup-id dmenu_run
 # A more modern dmenu replacement is rofi:
