@@ -177,8 +177,6 @@ assign [class="steam"] $ws9
 
 for_window [title="Picture-in-Picture"] sticky enable
 
-for_window [title="CobaltCore"] floating enable
-
 # reload the configuration file
 bindsym $mod+Shift+J reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
