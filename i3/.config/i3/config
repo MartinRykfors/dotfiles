@@ -132,6 +132,10 @@ bindsym $mod+a focus parent
 # focus the child container
 bindsym $mod+Shift+a focus child
 
+# send to and recall from scratchpad
+bindsym $mod+Tab move scratchpad
+bindsym $mod+Shift+Tab scratchpad show
+
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 # 
