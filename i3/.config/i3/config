@@ -48,9 +48,9 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 focus_follows_mouse no
 
 # Gaps and borders
-gaps inner 10px
+gaps inner 0px
 gaps outer 0px
-default_border pixel 5px
+default_border pixel 3px
 smart_gaps on
 smart_borders on
 
