@@ -1,2 +1,3 @@
 *.~undo-tree~
 systemd/.config/systemd/user/*.wants
+beets/.config/beets/state.pickle

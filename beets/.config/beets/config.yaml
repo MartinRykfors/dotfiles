@@ -1,0 +1,13 @@
+directory: /srv/media/music/
+library: /srv/media/musiclibrary.db
+plugins: fetchart discogs
+import:
+    move: yes
+fetchart:
+    sources: filesystem coverart itunes amazon albumart wikipedia google fanarttv
+paths:
+    default: $albumartist/$album%aunique{}/$track $title
+    singleton: Non-Album/$artist/$title
+    comp: Various Artists/$album%aunique{}/$track $title
+ui:
+    color: yes
