@@ -1,0 +1,140 @@
+{
+  "cursorless.colors.dark": {
+    "blue": "#388aff",
+    "green": "#64ba57",
+    "red": "#c02D28",
+    "pink": "#ff8cca",
+    "yellow": "#fdd66b",
+    "userColor1": "#8a00ff",
+    "userColor2": "#aaffff"
+  },
+  "cursorless.colors.light": {
+    "default": "#858190",
+    "blue": "#284ae3",
+    "green": "#44aa67",
+    "red": "#ee0000",
+    "pink": "#ff97cf",
+    "userColor1": "#ca10ff",
+    "userColor2": "#48eeee"
+  },
+  "cursorless.hatPenalties.shapes": {
+    "ex": 1,
+    "fox": 1,
+    "frame": 1,
+    "bolt": 1
+  },
+
+  "cursorless.private.hatShapesDir": "/home/rykarn/.talon/user/knausj_talon/cursorless-settings/cursorless_hats/hats",
+
+  "editor.lineHeight": 1.75,
+  "cursorless.hatVerticalOffset": 16,
+  "workbench.iconTheme": "Monokai Pro (Filter Octagon) Icons",
+  "zenMode.hideLineNumbers": false,
+  "[python]": {
+    "editor.formatOnType": true,
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "settingsSync.ignoredExtensions": ["johnstoncode.svn-scm", "vscodevim.vim"],
+  "cursorless.individualHatAdjustments": {
+    "default": {
+      "sizeAdjustment": 14,
+      "verticalOffset": 0.35
+    },
+    "ex": {
+      "sizeAdjustment": -10
+    },
+    "fox": {
+      "sizeAdjustment": -10
+    },
+    "wing": {
+      "sizeAdjustment": -15.5,
+      "verticalOffset": -1.1
+    },
+    "hole": {
+      "sizeAdjustment": -32.5,
+      "verticalOffset": 2
+    },
+    "frame": {
+      "sizeAdjustment": 15,
+      "verticalOffset": 2.25
+    },
+    "curve": {
+      "sizeAdjustment": 21,
+      "verticalOffset": 3.15
+    },
+    "eye": {
+      "sizeAdjustment": 6.5,
+      "verticalOffset": 1
+    },
+    "play": {
+      "sizeAdjustment": 8,
+      "verticalOffset": 0.5
+    },
+    "bolt": {
+      "sizeAdjustment": -22.5
+    },
+    "crosshairs": {
+      "sizeAdjustment": -29.5,
+      "verticalOffset": 1
+    }
+  },
+  "cursorless.experimental.snippetsDir": "/home/rykarn/.talon/user/knausj_talon/cursorless-snippets",
+  "settingsSync.ignoredSettings": [
+    "editor.fontSize",
+    "cursorless.experimental.snippetsDir"
+  ],
+  "editor.bracketPairColorization.enabled": false,
+  "editor.guides.highlightActiveBracketPair": false,
+  "editor.guides.bracketPairsHorizontal": false,
+  "workbench.preferredDarkColorTheme": "Nord Deep",
+  "workbench.preferredLightColorTheme": "Nord Light",
+  "editor.renderLineHighlightOnlyWhenFocus": true,
+  "files.trimFinalNewlines": true,
+  "editor.minimap.enabled": false,
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "liveServer.settings.donotShowInfoMsg": true,
+  "workbench.colorTheme": "Nord Deep",
+  "files.trimTrailingWhitespace": true,
+  "window.restoreWindows": "none",
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "cursorless.hatSizeAdjustment": 90,
+  "git.confirmSync": false,
+  "extensions.ignoreRecommendations": true,
+  "redhat.telemetry.enabled": false,
+  "cursorless.hatEnablement.shapes": {
+    "bolt": true,
+    "curve": true,
+    "fox": true,
+    "frame": true,
+    "play": true,
+    "wing": true,
+    "hole": true,
+    "ex": true,
+    "crosshairs": true,
+    "eye": true
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.fontSize": 12,
+  "search.mode": "reuseEditor",
+  "cursorless.hatEnablement.colors": {
+    "userColor1": true,
+    "userColor2": true
+  },
+  "cursorless.hatPenalties.colors": {
+    "blue": 2,
+    "green": 4,
+    "red": 3,
+    "pink": 5,
+    "yellow": 6,
+    "userColor1": 7,
+    "userColor2": 8
+  },
+  "editor.parameterHints.enabled": false,
+  "editor.wordWrap": "on"
+}
