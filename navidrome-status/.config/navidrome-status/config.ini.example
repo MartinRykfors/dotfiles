@@ -1,0 +1,5 @@
+[Settings]
+# Enter your navidrome credentials below then save as config.ini
+username=
+password=
+refresh_interval=2

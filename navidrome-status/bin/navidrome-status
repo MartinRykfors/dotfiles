@@ -4,36 +4,67 @@ import os
 import requests
 import subprocess
 import xml.etree.ElementTree as ET
-from dotenv import load_dotenv
+import configparser
+import signal
+import time
 
-load_dotenv()
+alive = True
+
+
+def finish(signum, frame):
+    global alive
+    set_module_text("")
+    alive = False
+
+
+signal.signal(signal.SIGTERM, finish)
+
+
+def load_config():
+    config_home = os.environ.get("XDG_CONFIG_HOME")
+    if not config_home:
+        config_home = os.path.expanduser("~/.config")
+    config_path = os.path.join(config_home, "navidrome-status", "config.ini")
+    config = configparser.ConfigParser()
+    config.read(config_path)
+    return {
+        "username": config["Settings"]["username"],
+        "password": config["Settings"]["password"],
+        "refresh_interval": int(config["Settings"]["refresh_interval"]),
+    }
 
 
 def main():
-    username = os.getenv("USERNAME")
-    password = os.getenv("PASSWORD")
+    config = load_config()
+    username = config["username"]
+    password = config["password"]
+    refresh_interval = config["refresh_interval"]
     url = "http://localhost:4533/rest/getNowPlaying"
     params = {"u": username, "c": "navidrome-status", "p": password, "v": "1.0.0"}
-    response = requests.get(url, params=params)
-    root = ET.fromstring(response.text)
-    status = root.attrib["status"]
-    if status != "ok":
-        print("Error: Navidrome status: {}".format(status))
-        set_module_text("")
-        return
+    while alive:
+        response = requests.get(url, params=params)
+        root = ET.fromstring(response.text)
+        status = root.attrib["status"]
+        if status != "ok":
+            print("Error: Navidrome status: {}".format(status))
+            set_module_text("")
+            time.sleep(refresh_interval)
+            continue
 
-    entry = root.findall(
-        f".//{{http://subsonic.org/restapi}}entry[@username='{username}']"
-    )
-    if not entry:
-        print("Nothing currently playing")
-        set_module_text("")
-        return
+        entry = root.findall(
+            f".//{{http://subsonic.org/restapi}}entry[@username='{username}']"
+        )
+        if not entry:
+            print("Nothing currently playing")
+            set_module_text("")
+            time.sleep(refresh_interval)
+            continue
 
-    entry = entry[0]
-    print(entry.attrib)
-    playing_text = f"  {entry.attrib['artist']} - {entry.attrib['title']} - {entry.attrib['album']} ({entry.attrib['year']})"
-    set_module_text(playing_text)
+        entry = entry[0]
+        print(entry.attrib)
+        playing_text = f"  {entry.attrib['artist']} - {entry.attrib['title']} - {entry.attrib['album']} ({entry.attrib['year']})"
+        set_module_text(playing_text)
+        time.sleep(refresh_interval)
 
 
 def set_module_text(text):
