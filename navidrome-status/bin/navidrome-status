@@ -1,0 +1,44 @@
+#!/usr/bin/python3
+
+import os
+import requests
+import subprocess
+import xml.etree.ElementTree as ET
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
+def main():
+    username = os.getenv("USERNAME")
+    password = os.getenv("PASSWORD")
+    url = "http://localhost:4533/rest/getNowPlaying"
+    params = {"u": username, "c": "navidrome-status", "p": password, "v": "1.0.0"}
+    response = requests.get(url, params=params)
+    root = ET.fromstring(response.text)
+    status = root.attrib["status"]
+    if status != "ok":
+        print("Error: Navidrome status: {}".format(status))
+        set_module_text("")
+        return
+
+    entry = root.findall(
+        f".//{{http://subsonic.org/restapi}}entry[@username='{username}']"
+    )
+    if not entry:
+        print("Nothing currently playing")
+        set_module_text("")
+        return
+
+    entry = entry[0]
+    print(entry.attrib)
+    playing_text = f"  {entry.attrib['artist']} - {entry.attrib['title']} - {entry.attrib['album']} ({entry.attrib['year']})"
+    set_module_text(playing_text)
+
+
+def set_module_text(text):
+    subprocess.check_call(("polybar-msg", "action", "navidrome", "send", text))
+
+
+if __name__ == "__main__":
+    main()

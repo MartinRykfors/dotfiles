@@ -1,0 +1,5 @@
+[Unit]
+Description=Update polybar with currently playing music in navidrome
+
+[Service]
+ExecStart=%h/bin/navidrome-status

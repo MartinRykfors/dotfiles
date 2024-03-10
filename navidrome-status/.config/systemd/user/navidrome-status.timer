@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer for updating polybar with music information
+
+[Timer]
+AccuracySec=1s
+OnBootSec=1min
+OnUnitActiveSec=2s
+
+[Install]
+WantedBy=timers.target
