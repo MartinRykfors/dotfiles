@@ -43,6 +43,7 @@ def main():
     params = {"u": username, "c": "navidrome-status", "p": password, "v": "1.0.0"}
     while alive:
         response = requests.get(url, params=params)
+        response.encoding = 'utf-8'
         root = ET.fromstring(response.text)
         status = root.attrib["status"]
         if status != "ok":
