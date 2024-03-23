@@ -1,4 +1,5 @@
 *.~undo-tree~
 systemd/.config/systemd/user/*.wants
 beets/.config/beets/state.pickle
+beets/.config/beets/discogs_token.json
 navidrome-status/.config/navidrome-status/config.ini
