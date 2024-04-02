@@ -1,5 +1,9 @@
 [Unit]
 Description=Update polybar with currently playing music in navidrome
+After=navidrome.service
 
 [Service]
 ExecStart=%h/bin/navidrome-status
+
+[Install]
+WantedBy=multi-user.target
