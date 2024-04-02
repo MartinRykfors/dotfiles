@@ -62,8 +62,20 @@ def main():
             continue
 
         entry = entry[0]
-        print(entry.attrib)
-        playing_text = f"  {entry.attrib['artist']} - {entry.attrib['title']} - {entry.attrib['album']} ({entry.attrib['year']})"
+        year = entry.attrib.get('year', None)
+        artist = entry.attrib.get('artist', None)
+        title = entry.attrib.get('title', None)
+        if (artist is None) or (title is None):
+            print("Missing artist or title data")
+            time.sleep(refresh_interval)
+            continue
+
+
+        if year is not None:
+            playing_text = f"  {entry.attrib['artist']} - {entry.attrib['title']} - {entry.attrib['album']} ({entry.attrib['year']})"
+        else:
+            playing_text = f"  {entry.attrib['artist']} - {entry.attrib['title']} - {entry.attrib['album']}"
+
         set_module_text(playing_text)
         time.sleep(refresh_interval)
 
