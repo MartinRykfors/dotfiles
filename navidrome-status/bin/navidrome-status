@@ -81,7 +81,7 @@ def main():
 
 
 def set_module_text(text):
-    subprocess.check_call(("polybar-msg", "action", "navidrome", "send", text))
+    subprocess.check_call(("polybar-msg", "action", "navidrome", "send", text), stdout=subprocess.DEVNULL)
 
 
 if __name__ == "__main__":
