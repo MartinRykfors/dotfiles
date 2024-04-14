@@ -1,0 +1,7 @@
+[Unit]
+Description=Run media library rsync backup to T7Shield
+
+[Service]
+Type=oneshot
+RemainAfterExit=false
+ExecStart=rsync -av --delete /srv/media /run/media/rykarn/T7Shield
