@@ -7,6 +7,14 @@ import xml.etree.ElementTree as ET
 import configparser
 import signal
 import time
+import logging
+import sys
+
+root = logging.getLogger()
+root.setLevel(logging.INFO)
+
+handler = logging.StreamHandler(sys.stdout)
+root.addHandler(handler)
 
 alive = True
 
@@ -14,6 +22,7 @@ alive = True
 def finish(signum, frame):
     global alive
     set_module_text("")
+    logging.info("Received SIGTERM, stopping")
     alive = False
 
 
@@ -47,7 +56,7 @@ def main():
         root = ET.fromstring(response.text)
         status = root.attrib["status"]
         if status != "ok":
-            print("Error: Navidrome status: {}".format(status))
+            logging.debug("Error: Navidrome status: {}".format(status))
             set_module_text("")
             time.sleep(refresh_interval)
             continue
@@ -56,6 +65,7 @@ def main():
             f".//{{http://subsonic.org/restapi}}entry[@username='{username}']"
         )
         if not entry:
+            logging.debug("Nothing currently playing")
             print("Nothing currently playing")
             set_module_text("")
             time.sleep(refresh_interval)
@@ -66,7 +76,7 @@ def main():
         artist = entry.attrib.get('artist', None)
         title = entry.attrib.get('title', None)
         if (artist is None) or (title is None):
-            print("Missing artist or title data")
+            logging.debug("Missing artist or title data")
             time.sleep(refresh_interval)
             continue
 
@@ -81,7 +91,10 @@ def main():
 
 
 def set_module_text(text):
-    subprocess.check_call(("polybar-msg", "action", "navidrome", "send", text), stdout=subprocess.DEVNULL)
+    try:
+        subprocess.check_call(("polybar-msg", "action", "navidrome", "send", text), stdout=subprocess.DEVNULL)
+    except subprocess.CalledProcessError as ex:
+        logging.error(ex)
 
 
 if __name__ == "__main__":
