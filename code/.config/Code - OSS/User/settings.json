@@ -90,7 +90,6 @@
   "workbench.preferredLightColorTheme": "Nord Light",
   "editor.renderLineHighlightOnlyWhenFocus": true,
   "files.trimFinalNewlines": true,
-  "editor.minimap.enabled": false,
   "[css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -136,5 +135,10 @@
     "userColor2": 8
   },
   "editor.parameterHints.enabled": false,
-  "editor.wordWrap": "on"
+  "editor.acceptSuggestionOnCommitCharacter": false,
+  "editor.wordWrap": "on",
+  "editor.acceptSuggestionOnEnter": "off",
+  "editor.inlineSuggest.enabled": false,
+  "editor.inlineSuggest.suppressSuggestions": true,
+  "editor.suggest.showWords": false
 }
