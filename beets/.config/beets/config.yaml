@@ -2,7 +2,7 @@ directory: /srv/media/music/
 library: /srv/media/musiclibrary.db
 plugins: fetchart discogs
 discogs:
-    source_weight: 0.8
+    source_weight: 1.0
 import:
     move: yes
 fetchart:
