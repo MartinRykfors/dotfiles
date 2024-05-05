@@ -7,19 +7,24 @@
 
 (defvar ws-defs "[{\"index\": 1, \"class\": \"focused\"}, {\"index\": 2, \"class\": \"populated\"}, {\"index\": 3, \"class\": \"unused\"}, {\"index\": 4, \"class\": \"unused\"}, {\"index\": 5, \"class\": \"unused\"}, {\"index\": 6, \"class\": \"unused\"}, {\"index\": 7, \"class\": \"unused\"}, {\"index\": 8, \"class\": \"populated\"}, {\"index\": 9, \"class\": \"populated\"}]")
 
+; pactl subscribe | grep --line-buffered "sink" | xargs -I{} pactl get-sink-volume @DEFAULT_SINK@ | awk '{ print substr($5, 0, length($5)-1) }'
+
 (defwidget workspaces []
-  (box :class "workspaces"
-       :orientation "h"
-       :space-evenly true
-       :halign "start"
-       :spacing 2
-    (for entry in ws-defs
-         (eventbox :cursor "pointer"
-                   (button :onclick "i3-msg workspace number ${entry.index}"
-                           :class {entry.class}
-                           "${entry.index}"
-                           )))
-    ))
+           (box :class "workspaces"
+                :orientation "h"
+                :space-evenly true
+                :halign "start"
+                :spacing 2
+                (for entry in ws-defs
+                     (eventbox :cursor "pointer"
+                               (button :onclick "i3-msg workspace number ${entry.index}"
+                                       :class {entry.class}
+                                       "${entry.index}"
+                                       )))
+                ))
+
+(deflisten volume :initial 50
+           `pactl subscribe | grep --line-buffered "sink" | xargs -I{} pactl get-sink-volume @DEFAULT_SINK@ | grep --line-buffered "Volume" | stdbuf -oL -eL awk '{ print substr($5, 0, length($5)-1) }'`)
 
 
 (defwidget window-title []
@@ -29,18 +34,34 @@
            (box :orientation "h"
                 :halign "end"
                 :space-evenly false
-                (stat :label-text "cpuuuu"
+                (sound)
+                (divider)
+                (stat :label-text ""
                       :progress-value {EWW_CPU.avg})
                 (divider)
-                (stat :label-text "ram"
+                (stat :label-text ""
                       :progress-value {EWW_RAM.used_mem_perc})
                 (divider)
                 (clock)
                 ))
 
+
 (defwidget divider []
            (box :orientation "h"
                 :class "divider"))
+
+(defwidget sound []
+           (eventbox :onscroll `echo {} | sed -e 's/up/+5%/g' -e 's/down/-5%/g' | xargs pactl set-sink-volume @DEFAULT_SINK@`
+                     :cursor "pointer"
+                     (box :orientation "h"
+                          :class "stat-container"
+                          :spacing 10
+                          :space-evenly false
+                          (label :class "stat-label" :text "")
+                          (box :orientation "v"
+                               :valign "center"
+                               (progress :value {volume}
+                                         :orientation "h")))))
 
 (defwidget clock []
            (box :orientation "h"
@@ -49,7 +70,6 @@
                 :space-evenly true
                 :halign "center"
                 (label :text {formattime (EWW_TIME, "%Y-%m-%d %H:%M")})
-                ;; (label :text {formattime (EWW_TIME, "0000-00-00 00:00")})
                 )
            )
 
