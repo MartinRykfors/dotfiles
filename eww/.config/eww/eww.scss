@@ -15,7 +15,7 @@ $aurora2: #ebcb8b;
 $aurora3: #a3be8c;
 $aurora4: #b48ead;
 
-$background: $night0;
+$background: $night1;
 
 * {
     all: unset;
@@ -25,7 +25,47 @@ $background: $night0;
     background: $background;
     font-size: 20px;
     font-family: "League Spartan";
-    color: $night0;
+    color: $snow0;
+}
+
+.stat-container {
+    // border: 1px solid;
+    padding: 0px 10px 0px 10px;
+}
+
+.clock-container {
+    // border: 1px solid;
+    padding: 0px 10px 0px 10px;
+    min-width: 180px;
+}
+
+progressbar progress {
+    background-color: $aurora1;
+    border: 0px;
+}
+
+progressbar trough, progress {
+    border: 0px;
+    border-radius: 0px;
+    min-height: 10px;
+}
+
+progressbar progress {
+    background-color: $frost1;
+}
+
+progressbar trough {
+    background-color: $night0;
+    min-width: 50px;
+}
+
+.stat-label {
+    color: $frost1;
+}
+
+.divider {
+    min-width: 1px;
+    border-right: 2px solid $night3;
 }
 
 .workspaces {

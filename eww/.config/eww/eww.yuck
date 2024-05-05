@@ -5,7 +5,7 @@
     (window-title)
     (status)))
 
-(defvar ws-defs "[{\"index\": 1, \"class\": \"focused\"}, {\"index\": 2, \"class\": \"populated\"}, {\"index\": 3, \"class\": \"unused\"}, {\"index\": 4, \"class\": \"unused\"}, {\"index\": 5, \"class\": \"unused\"}, {\"index\": 6, \"class\": \"unused\"}, {\"index\": 7, \"class\": \"unused\"}, {\"index\": 8, \"class\": \"unused\"}, {\"index\": 9, \"class\": \"populated\"}]")
+(defvar ws-defs "[{\"index\": 1, \"class\": \"focused\"}, {\"index\": 2, \"class\": \"populated\"}, {\"index\": 3, \"class\": \"unused\"}, {\"index\": 4, \"class\": \"unused\"}, {\"index\": 5, \"class\": \"unused\"}, {\"index\": 6, \"class\": \"unused\"}, {\"index\": 7, \"class\": \"unused\"}, {\"index\": 8, \"class\": \"populated\"}, {\"index\": 9, \"class\": \"populated\"}]")
 
 (defwidget workspaces []
   (box :class "workspaces"
@@ -13,8 +13,6 @@
        :space-evenly true
        :halign "start"
        :spacing 2
-
-       :cursor "pointer"
     (for entry in ws-defs
          (eventbox :cursor "pointer"
                    (button :onclick "i3-msg workspace number ${entry.index}"
@@ -28,8 +26,44 @@
            (box))
 
 (defwidget status []
-           (box))
+           (box :orientation "h"
+                :halign "end"
+                :space-evenly false
+                (stat :label-text "cpuuuu"
+                      :progress-value {EWW_CPU.avg})
+                (divider)
+                (stat :label-text "ram"
+                      :progress-value {EWW_RAM.used_mem_perc})
+                (divider)
+                (clock)
+                ))
 
+(defwidget divider []
+           (box :orientation "h"
+                :class "divider"))
+
+(defwidget clock []
+           (box :orientation "h"
+                :class "clock-container"
+                :spacing 10
+                :space-evenly true
+                :halign "center"
+                (label :text {formattime (EWW_TIME, "%Y-%m-%d %H:%M")})
+                ;; (label :text {formattime (EWW_TIME, "0000-00-00 00:00")})
+                )
+           )
+
+(defwidget stat [label-text progress-value]
+           (box :orientation "h"
+                :class "stat-container"
+                :spacing 10
+                :space-evenly false
+                (label :class "stat-label" :text label-text)
+                (box :orientation "v"
+                     :valign "center"
+                     (progress :value progress-value
+                               :orientation "h")
+                     )))
 
 (defwindow bar
   :monitor 0
