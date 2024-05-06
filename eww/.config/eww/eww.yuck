@@ -26,14 +26,24 @@
 (deflisten volume :initial 50
            `pactl subscribe | grep --line-buffered "sink" | xargs -I{} pactl get-sink-volume @DEFAULT_SINK@ | grep --line-buffered "Volume" | stdbuf -oL -eL awk '{ print substr($5, 0, length($5)-1) }'`)
 
+; Struggling with getting sed to work here. It seems to buffer
+; the same way other commands do, but I have not been able to make
+; it stop doing that. Using awk instead.
+(deflisten kbd-layout :initial "English (Dvorak)"
+           `xkbmon | stdbuf -oL -eL awk '{gsub("se", "Swedish ");gsub(/us/,"English "); gsub("dvorak","Dvorak"); print}'`)
+
+(deflisten current-window-title :initial ""
+           `i3-msg -t subscribe -m ' [ "window" ] ' | jq --unbuffered -r '.container | select(.focused == true) | .window_properties.title'`)
 
 (defwidget window-title []
-           (box))
+           (label :text "${current-window-title}"))
 
 (defwidget status []
            (box :orientation "h"
                 :halign "end"
                 :space-evenly false
+                (kbd)
+                (divider)
                 (sound)
                 (divider)
                 (stat :label-text ""
@@ -50,6 +60,14 @@
            (box :orientation "h"
                 :class "divider"))
 
+(defwidget kbd []
+           (eventbox :cursor "pointer"
+                     (box :orientation "h"
+                          :class "stat-container"
+                          :spacing 10
+                          :space-evenly false
+                          (label :class "stat-label" :text "")
+                          (label :text "${kbd-layout}"))))
 (defwidget sound []
            (eventbox :onscroll `echo {} | sed -e 's/up/+5%/g' -e 's/down/-5%/g' | xargs pactl set-sink-volume @DEFAULT_SINK@`
                      :cursor "pointer"
@@ -57,6 +75,7 @@
                           :class "stat-container"
                           :spacing 10
                           :space-evenly false
+                          :tooltip "${volume}%"
                           (label :class "stat-label" :text "")
                           (box :orientation "v"
                                :valign "center"
