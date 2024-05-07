@@ -1,13 +1,13 @@
 
 (defwidget bar []
-  (centerbox :orientation "h"
-    (workspaces)
-    (window-title)
-    (status)))
+           (centerbox :orientation "h"
+                      (workspaces)
+                      (window-title)
+                      (status)))
 
 
 (deflisten ws-defs :initial "[]"
-         `scripts/workspace`)
+           `scripts/workspace`)
 
 (deflisten volume :initial 50
            `scripts/volume`)
@@ -29,10 +29,7 @@
                                (button :onclick "i3-msg workspace number ${entry.index}"
                                        :class {entry.class}
                                        "${entry.index}"
-                                       )))
-                ))
-
-
+                                       )))))
 
 (defwidget window-title []
            (label :text "${current-window-title}"))
@@ -52,12 +49,59 @@
                       :progress-value {EWW_RAM.used_mem_perc})
                 (divider)
                 (clock)
+                (divider)
+                (power)
                 ))
 
 
 (defwidget divider []
            (box :orientation "h"
                 :class "divider"))
+
+(defwidget divider-dashed []
+           (box :orientation "h"
+                :class "divider-dashed"))
+
+(defvar power false)
+(defvar power-confirm false)
+(defvar sleep-confirm false)
+(defvar reboot-confirm false)
+
+(defwidget power []
+           (eventbox :onhover "eww update power=true"
+                     :onhoverlost "eww update power=false power-confirm=false sleep-confirm=false reboot-confirm=false"
+                     (box
+                      :orientation "h"
+                      :space-evenly false
+                      (confirm-button :icon ""
+                                      :name "power"
+                                      :confirm-var power-confirm)
+                      (revealer :transition "slideleft"
+                                :reveal power
+                                (box :orientation "h"
+                                     :space-evenly false
+                                     (divider)
+                                     (confirm-button :icon ""
+                                                     :name "reboot"
+                                                     :confirm-var reboot-confirm)
+                                     (divider)
+                                     (confirm-button :icon "󰒲"
+                                                     :name "sleep"
+                                                     :confirm-var sleep-confirm))))))
+
+(defwidget confirm-button [icon name confirm-var]
+           (box :orientation "h"
+                :space-evenly false
+                (revealer :transition "slideright"
+                          :reveal confirm-var
+                          (eventbox :cursor "pointer"
+                                    (button :class "confirm-button"
+                                                           ; :onclick "systemctl poweroff"
+                                            "")))
+                          (eventbox :cursor "pointer"
+                                    (button :class "power-button"
+                                            :onclick `eww update ${name}-confirm=true`
+                                            icon))))
 
 (defwidget kbd []
            (eventbox :cursor "pointer"
@@ -87,9 +131,7 @@
                 :spacing 10
                 :space-evenly true
                 :halign "center"
-                (label :text {formattime (EWW_TIME, "%Y-%m-%d %H:%M")})
-                )
-           )
+                (label :text {formattime (EWW_TIME, "%Y-%m-%d %H:%M")})))
 
 (defwidget stat [label-text progress-value]
            (box :orientation "h"

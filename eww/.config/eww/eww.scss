@@ -28,6 +28,15 @@ $background: $night1;
     color: $snow0;
 }
 
+.power-button {
+    margin: 0px 10px 0px 10px;
+}
+
+.confirm-button {
+    margin: 0px 10px 0px 10px;
+    color: $aurora3;
+}
+
 .stat-container {
     // border: 1px solid;
     padding: 0px 10px 0px 10px;
@@ -66,6 +75,11 @@ progressbar trough {
 .divider {
     min-width: 1px;
     border-right: 2px solid $night3;
+}
+
+.divider-dashed {
+    min-width: 1px;
+    border-right: 2px dashed $night3;
 }
 
 .workspaces {
