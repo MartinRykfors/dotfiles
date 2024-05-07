@@ -5,9 +5,18 @@
     (window-title)
     (status)))
 
-(defvar ws-defs "[{\"index\": 1, \"class\": \"focused\"}, {\"index\": 2, \"class\": \"populated\"}, {\"index\": 3, \"class\": \"unused\"}, {\"index\": 4, \"class\": \"unused\"}, {\"index\": 5, \"class\": \"unused\"}, {\"index\": 6, \"class\": \"unused\"}, {\"index\": 7, \"class\": \"unused\"}, {\"index\": 8, \"class\": \"populated\"}, {\"index\": 9, \"class\": \"populated\"}]")
 
-; pactl subscribe | grep --line-buffered "sink" | xargs -I{} pactl get-sink-volume @DEFAULT_SINK@ | awk '{ print substr($5, 0, length($5)-1) }'
+(deflisten ws-defs :initial "[]"
+         `scripts/workspace`)
+
+(deflisten volume :initial 50
+           `scripts/volume`)
+
+(deflisten kbd-layout :initial "English (Dvorak)"
+           `scripts/kbd`)
+
+(deflisten current-window-title :initial ""
+           `scripts/current-window`)
 
 (defwidget workspaces []
            (box :class "workspaces"
@@ -23,17 +32,7 @@
                                        )))
                 ))
 
-(deflisten volume :initial 50
-           `pactl subscribe | grep --line-buffered "sink" | xargs -I{} pactl get-sink-volume @DEFAULT_SINK@ | grep --line-buffered "Volume" | stdbuf -oL -eL awk '{ print substr($5, 0, length($5)-1) }'`)
 
-; Struggling with getting sed to work here. It seems to buffer
-; the same way other commands do, but I have not been able to make
-; it stop doing that. Using awk instead.
-(deflisten kbd-layout :initial "English (Dvorak)"
-           `xkbmon | stdbuf -oL -eL awk '{gsub("se", "Swedish ");gsub(/us/,"English "); gsub("dvorak","Dvorak"); print}'`)
-
-(deflisten current-window-title :initial ""
-           `i3-msg -t subscribe -m ' [ "window" ] ' | jq --unbuffered -r '.container | select(.focused == true) | .window_properties.title'`)
 
 (defwidget window-title []
            (label :text "${current-window-title}"))

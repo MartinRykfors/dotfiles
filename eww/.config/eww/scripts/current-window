@@ -1,0 +1,3 @@
+#!/bin/sh
+
+i3-msg -t subscribe -m ' [ "window" ] ' | jq --unbuffered -r '.container | select(.focused == true) | .window_properties.title'

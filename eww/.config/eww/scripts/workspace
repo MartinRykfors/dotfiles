@@ -1,9 +1,10 @@
-#! /usr/bin/python3
+#!/usr/bin/python3
 
 import subprocess
 import sys
 import json
 import enum
+import os
 
 
 class WorkspaceState(enum.Enum):
@@ -39,7 +40,8 @@ def initialise_workspaces():
         if state['focused']:
             workspaces[state['num']].state = WorkspaceState.FOCUSED
     js = [{'index': i, 'class': ws_class(ws)} for i, ws in workspaces.items()]
-    subprocess.run(['eww', 'update', f"""ws-defs={json.dumps(js)}"""])
+    # No idea why print(...) does not suffice
+    os.system(f"""echo '{json.dumps(js)}'""")
     return workspaces
 
 def monitor_workspaces(workspaces):
@@ -60,7 +62,7 @@ def monitor_workspaces(workspaces):
         if change == 'empty':
             workspaces[current].state = WorkspaceState.EMPTY
         js = [{'index': i, 'class': ws_class(ws)} for i, ws in workspaces.items()]
-        subprocess.run(['eww', 'update', f"""ws-defs={json.dumps(js)}"""])
+        os.system(f"""echo '{json.dumps(js)}'""")
 
 
 def main():

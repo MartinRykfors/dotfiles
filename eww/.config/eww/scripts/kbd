@@ -1,0 +1,3 @@
+#!/bin/sh
+
+xkbmon | stdbuf -oL -eL awk '{gsub("se", "Swedish ");gsub(/us/,"English "); gsub("dvorak","Dvorak"); print}'

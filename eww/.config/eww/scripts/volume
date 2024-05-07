@@ -1,0 +1,5 @@
+#!/bin/sh
+
+pactl get-sink-volume @DEFAULT_SINK@ | grep --line-buffered "Volume" | stdbuf -oL -eL awk '{ print substr($5, 0, length($5)-1) }'
+
+pactl subscribe | grep --line-buffered "sink" | xargs -I{} pactl get-sink-volume @DEFAULT_SINK@ | grep --line-buffered "Volume" | stdbuf -oL -eL awk '{ print substr($5, 0, length($5)-1) }'
