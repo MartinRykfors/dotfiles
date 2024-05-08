@@ -15,7 +15,9 @@ $aurora2: #ebcb8b;
 $aurora3: #a3be8c;
 $aurora4: #b48ead;
 
-$background: $night1;
+$background: $night0;
+$interactable: $night1;
+$divider: $night2;
 
 * {
     all: unset;
@@ -29,23 +31,24 @@ $background: $night1;
 }
 
 .power-button {
-    margin: 0px 10px 0px 10px;
 }
 
-.confirm-button {
-    margin: 0px 10px 0px 10px;
+.power-button.confirm {
+    margin: 0px 10px 0px 0px;
     color: $aurora3;
 }
 
-.stat-container {
-    // border: 1px solid;
+
+.item-container {
     padding: 0px 10px 0px 10px;
 }
 
-.clock-container {
-    // border: 1px solid;
-    padding: 0px 10px 0px 10px;
+.item-container.clock {
     min-width: 180px;
+}
+
+.interactable {
+    background-color: $interactable;
 }
 
 progressbar progress {

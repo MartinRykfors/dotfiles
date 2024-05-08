@@ -73,9 +73,11 @@
                      (box
                       :orientation "h"
                       :space-evenly false
+                      :class "interactable"
                       (confirm-button :icon ""
                                       :name "power"
-                                      :confirm-var power-confirm)
+                                      :confirm-var power-confirm
+                                      :exec "systemctl poweroff")
                       (revealer :transition "slideleft"
                                 :reveal power
                                 (box :orientation "h"
@@ -83,20 +85,23 @@
                                      (divider)
                                      (confirm-button :icon ""
                                                      :name "reboot"
-                                                     :confirm-var reboot-confirm)
+                                                     :confirm-var reboot-confirm
+                                                     :exec "systemctl reboot")
                                      (divider)
                                      (confirm-button :icon "󰒲"
                                                      :name "sleep"
-                                                     :confirm-var sleep-confirm))))))
+                                                     :confirm-var sleep-confirm
+                                                     :exec "systemctl suspend"))))))
 
-(defwidget confirm-button [icon name confirm-var]
+(defwidget confirm-button [icon name confirm-var exec]
            (box :orientation "h"
                 :space-evenly false
+                :class "item-container"
                 (revealer :transition "slideright"
                           :reveal confirm-var
                           (eventbox :cursor "pointer"
-                                    (button :class "confirm-button"
-                                                           ; :onclick "systemctl poweroff"
+                                    (button :class "power-button confirm"
+                                            :onclick exec
                                             "")))
                           (eventbox :cursor "pointer"
                                     (button :class "power-button"
@@ -104,18 +109,18 @@
                                             icon))))
 
 (defwidget kbd []
-           (eventbox :cursor "pointer"
-                     (box :orientation "h"
-                          :class "stat-container"
-                          :spacing 10
-                          :space-evenly false
-                          (label :class "stat-label" :text "")
-                          (label :text "${kbd-layout}"))))
+           (box :orientation "h"
+                :class "item-container"
+                :spacing 10
+                :space-evenly false
+                (label :class "stat-label" :text "")
+                (label :text "${kbd-layout}")))
+
 (defwidget sound []
            (eventbox :onscroll `echo {} | sed -e 's/up/+5%/g' -e 's/down/-5%/g' | xargs pactl set-sink-volume @DEFAULT_SINK@`
                      :cursor "pointer"
                      (box :orientation "h"
-                          :class "stat-container"
+                          :class "item-container interactable"
                           :spacing 10
                           :space-evenly false
                           :tooltip "${volume}%"
@@ -127,7 +132,7 @@
 
 (defwidget clock []
            (box :orientation "h"
-                :class "clock-container"
+                :class "item-container clock"
                 :spacing 10
                 :space-evenly true
                 :halign "center"
@@ -135,7 +140,7 @@
 
 (defwidget stat [label-text progress-value]
            (box :orientation "h"
-                :class "stat-container"
+                :class "item-container"
                 :spacing 10
                 :space-evenly false
                 (label :class "stat-label" :text label-text)
