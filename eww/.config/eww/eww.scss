@@ -31,30 +31,25 @@ $divider: $night2;
 }
 
 .power-button {
+    padding: 10px;
+    background: $night1;
 }
 
 
 .power-button.confirm {
-    margin: 0px 10px 0px 0px;
+    // margin: 0px 10px 0px 0px;
     color: $aurora3;
 }
 
 
 .item-container {
     padding: 0px 10px 0px 10px;
+    background: $night1;
+    margin: 0px 0px 0px 2px;
 }
 
 .item-container.clock {
     min-width: 180px;
-}
-
-.interactable {
-    background-color: $interactable;
-}
-
-progressbar progress {
-    background-color: $aurora1;
-    border: 0px;
 }
 
 progressbar trough, progress {
@@ -65,11 +60,38 @@ progressbar trough, progress {
 
 progressbar progress {
     background-color: $frost1;
+    border: 0px;
 }
 
 progressbar trough {
     background-color: $night0;
     min-width: 50px;
+}
+
+.small-progress {
+    font-size: 13px;
+    margin: 1px 0px 1px 0px;
+
+    .small-progress-label {
+        margin: 0px 3px 0px 0px;
+        min-width: 30px;
+    }
+
+    progressbar trough, progress {
+        border: 0px;
+        border-radius: 0px;
+        min-height: 5px;
+    }
+
+    progressbar progress {
+        background-color: $frost1;
+        border: 0px;
+    }
+
+    progressbar trough {
+        background-color: $night0;
+        min-width: 50px;
+    }
 }
 
 .stat-label {
@@ -95,6 +117,11 @@ progressbar trough {
     font-size: 20px;
     padding: 2px;
 }
+
+.ws-button {
+    padding: 1px;
+}
+
 
 .workspaces {
     button {

@@ -30,7 +30,7 @@
 (defwidget workspace-item [ws]
            (eventbox :cursor "pointer"
                      (button :onclick "i3-msg workspace number ${ws.num}"
-                             :class {ws.class}
+                             :class "ws-button ${ws.class}"
                              (box
                               :space-evenly false
                               (box :orientation "v"
@@ -50,20 +50,43 @@
                 :halign "end"
                 :space-evenly false
                 (kbd)
-                (divider)
                 (sound)
-                (divider)
-                (stat :label-text ""
-                      :progress-value {EWW_CPU.avg})
-                (divider)
-                (stat :label-text ""
-                      :progress-value {EWW_RAM.used_mem_perc})
-                (divider)
+                (stats)
                 (clock)
-                (divider)
+                (my-systray)
                 (power)
                 ))
 
+(defwidget stats []
+           (box
+            :class "item-container"
+            (box
+             :orientation "v"
+             :space-evenly true
+             :valign "center"
+             (small-progress :label-text "cpu" :progress-value {EWW_CPU.avg})
+             (small-progress :label-text "ram" :progress-value {EWW_RAM.used_mem_perc}))))
+
+(defwidget small-progress [label-text progress-value]
+           (box
+            :class "small-progress"
+            :space-evenly false
+            :tooltip "${round(progress-value, 0)}%"
+            (label
+             :class "small-progress-label"
+             :text label-text)
+            (box
+             :orientation "v"
+             :valign "center"
+             (progress
+              :value progress-value
+              :orientation "h"))))
+
+(defwidget my-systray []
+           (box
+            :class "item-container"
+            (systray
+             :spacing 5)))
 
 (defwidget divider []
            (box :orientation "h"
@@ -79,45 +102,46 @@
 (defvar reboot-confirm false)
 
 (defwidget power []
-           (eventbox :onhover "eww update power=true"
-                     :onhoverlost "eww update power=false power-confirm=false sleep-confirm=false reboot-confirm=false"
-                     (box
-                      :orientation "h"
-                      :space-evenly false
-                      :class "interactable"
-                      (confirm-button :icon ""
-                                      :name "power"
-                                      :confirm-var power-confirm
-                                      :exec "systemctl poweroff")
-                      (revealer :transition "slideleft"
-                                :reveal power
-                                (box :orientation "h"
-                                     :space-evenly false
-                                     (divider)
-                                     (confirm-button :icon ""
-                                                     :name "reboot"
-                                                     :confirm-var reboot-confirm
-                                                     :exec "systemctl reboot")
-                                     (divider)
-                                     (confirm-button :icon "󰒲"
-                                                     :name "sleep"
-                                                     :confirm-var sleep-confirm
-                                                     :exec "systemctl suspend"))))))
+           (box
+            :class "item-container"
+            (eventbox
+             :onhover "eww update power=true"
+             :onhoverlost "eww update power=false power-confirm=false sleep-confirm=false reboot-confirm=false"
+             (box
+              :orientation "h"
+              :space-evenly false
+              (confirm-button :icon ""
+                              :name "power"
+                              :confirm-var power-confirm
+                              :exec "systemctl poweroff")
+              (revealer
+               :transition "slideleft"
+               :reveal power
+               (box :orientation "h"
+                    :space-evenly false
+                    (confirm-button :icon ""
+                                    :name "reboot"
+                                    :confirm-var reboot-confirm
+                                    :exec "systemctl reboot")
+                    (confirm-button :icon "󰒲"
+                                    :name "sleep"
+                                    :confirm-var sleep-confirm
+                                    :exec "systemctl suspend")))))))
 
 (defwidget confirm-button [icon name confirm-var exec]
-           (box :orientation "h"
-                :space-evenly false
-                :class "item-container"
-                (revealer :transition "slideright"
-                          :reveal confirm-var
-                          (eventbox :cursor "pointer"
-                                    (button :class "power-button confirm"
-                                            :onclick exec
-                                            "")))
-                          (eventbox :cursor "pointer"
-                                    (button :class "power-button"
-                                            :onclick `eww update ${name}-confirm=true`
-                                            icon))))
+           (box
+            :orientation "h"
+            :space-evenly false
+            (revealer :transition "slideright"
+                      :reveal confirm-var
+                      (eventbox :cursor "pointer"
+                                (button :class "power-button confirm"
+                                        :onclick exec
+                                        "")))
+            (eventbox :cursor "pointer"
+                      (button :class "power-button"
+                              :onclick `eww update ${name}-confirm=true`
+                              icon))))
 
 (defwidget kbd []
            (box :orientation "h"
@@ -131,7 +155,7 @@
            (eventbox :onscroll `echo {} | sed -e 's/up/+5%/g' -e 's/down/-5%/g' | xargs pactl set-sink-volume @DEFAULT_SINK@`
                      :cursor "pointer"
                      (box :orientation "h"
-                          :class "item-container interactable"
+                          :class "item-container"
                           :spacing 10
                           :space-evenly false
                           :tooltip "${volume}%"
@@ -148,18 +172,6 @@
                 :space-evenly true
                 :halign "center"
                 (label :text {formattime (EWW_TIME, "%Y-%m-%d %H:%M")})))
-
-(defwidget stat [label-text progress-value]
-           (box :orientation "h"
-                :class "item-container"
-                :spacing 10
-                :space-evenly false
-                (label :class "stat-label" :text label-text)
-                (box :orientation "v"
-                     :valign "center"
-                     (progress :value progress-value
-                               :orientation "h")
-                     )))
 
 (defwindow bar
   :monitor 0
