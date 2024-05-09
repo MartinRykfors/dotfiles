@@ -17,7 +17,6 @@ $aurora4: #b48ead;
 
 $background: $night0;
 $interactable: $night1;
-$divider: $night2;
 
 * {
     all: unset;
@@ -98,15 +97,6 @@ progressbar trough {
     color: $frost1;
 }
 
-.divider {
-    min-width: 1px;
-    border-right: 2px solid $night3;
-}
-
-.divider-dashed {
-    min-width: 1px;
-    border-right: 2px dashed $night3;
-}
 
 .app-label {
     font-family: "Symbols Nerd Font";

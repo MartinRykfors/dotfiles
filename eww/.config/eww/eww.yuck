@@ -88,14 +88,6 @@
             (systray
              :spacing 5)))
 
-(defwidget divider []
-           (box :orientation "h"
-                :class "divider"))
-
-(defwidget divider-dashed []
-           (box :orientation "h"
-                :class "divider-dashed"))
-
 (defvar power false)
 (defvar power-confirm false)
 (defvar sleep-confirm false)
