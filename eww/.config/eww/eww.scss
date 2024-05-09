@@ -108,12 +108,12 @@ progressbar trough {
     .populated {
         color: $snow0;
     }
-    .unused {
+    .empty {
+        background: $night0;
         color: $night3;
     }
     .urgent {
         background: $aurora0;
         color: $night0;
     }
-
 }
