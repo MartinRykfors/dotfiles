@@ -16,7 +16,6 @@ $aurora3: #a3be8c;
 $aurora4: #b48ead;
 
 $background: $night0;
-$interactable: $night1;
 
 * {
     all: unset;
@@ -115,7 +114,7 @@ progressbar trough {
 
 .workspaces {
     button {
-        background-color: $interactable;
+        background-color: $night1;
     }
     .focused {
         background: $frost0;
@@ -133,4 +132,29 @@ progressbar trough {
         background: $aurora0;
         color: $night0;
     }
+}
+
+.subtitle {
+    font-size: 40px;
+}
+
+.talon-icon {
+    font-size: 40px;
+    margin: 5px;
+}
+
+.talon-red {
+    color: $aurora0;
+}
+
+.talon-yellow {
+    color: $aurora2;
+}
+
+.talon-green {
+    color: $aurora3;
+}
+
+.talon-black {
+    color: $night0;
 }

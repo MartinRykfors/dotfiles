@@ -1,9 +1,20 @@
 
 (defwidget bar []
            (centerbox :orientation "h"
+                      :class "bar"
                       (workspaces)
                       (window-title)
                       (status)))
+
+(defwidget bottom-bar []
+           (centerbox :orientation "h"
+                      :class "bar"
+                      (music)
+                      (subtitles)
+                      (talon-state)
+                      ))
+
+
 
 
 (deflisten ws-defs :initial "[]"
@@ -170,13 +181,90 @@
                 :halign "center"
                 (label :text {formattime (EWW_TIME, "%Y-%m-%d %H:%M")})))
 
+(defvar currently-playing "{\"artist\": \"Artist\", \"track\": \"Track\", \"album\": \"Album\", \"year\": \"2020\"}")
+
+(defwidget music []
+           (box
+            :orientation "h"
+            :halign "start"
+            :class "item-container"
+            (box
+             :orientation "v"
+             :valign "end"
+             :space-evenly false
+             (box
+              :orientation "h"
+              :halign "start"
+              :space-evenly false
+              (label :text "${currently-playing.artist} - ${currently-playing.track}"))
+             (box
+              :orientation "h"
+              :halign "start"
+              :space-evenly false
+              (label :text "${currently-playing.album} (${currently-playing.year})")))))
+
+(defvar subtitle "kernel smash")
+(defwidget subtitles []
+           (box
+            :class "subtitle"
+            :orientation "v"
+            :valign "end"
+            (label :text "kernel smash")))
+
+(defvar listen false)
+(defvar warn false)
+(defvar cancel false)
+(defvar repeat false)
+(defwidget talon-state []
+           (box
+            :orientation "h"
+            :halign "end"
+            :class "item-container"
+            (talon-icon
+             :icon ""
+             :off-class "talon-black"
+             :on-class "talon-green"
+             :is-on repeat)
+            (talon-icon
+             :icon ""
+             :off-class "talon-black"
+             :on-class "talon-red"
+             :is-on cancel)
+            (talon-icon
+             :icon ""
+             :off-class "talon-black"
+             :on-class "talon-yellow"
+             :is-on warn)
+            (talon-icon
+             :icon ""
+             :off-class "talon-red"
+             :on-class "talon-green"
+             :is-on listen)))
+
+(defwidget talon-icon [icon off-class on-class is-on]
+           (label
+            :class "talon-icon ${is-on ? on-class: off-class}"
+            :text icon))
+
 (defwindow bar
+           :monitor 0
+           :windowtype "dock"
+           :geometry (geometry :x "0%"
+                               :y "0%"
+                               :width "100%"
+                               :height "35px"
+                               :anchor "top center")
+           :reserve (struts :side "top" :distance "4%")
+           (bar))
+
+
+(defwindow bottom-bar
   :monitor 0
   :windowtype "dock"
   :geometry (geometry :x "0%"
                       :y "0%"
                       :width "100%"
-                      :height "35px"
-                      :anchor "top center")
-  :reserve (struts :side "top" :distance "4%")
-  (bar))
+                      :height "50px"
+                      :anchor "bottom center")
+  :reserve (struts :side "bottom" :distance "5%")
+  (bottom-bar))
