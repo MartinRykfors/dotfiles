@@ -33,6 +33,7 @@ $divider: $night2;
 .power-button {
 }
 
+
 .power-button.confirm {
     margin: 0px 10px 0px 0px;
     color: $aurora3;
@@ -85,10 +86,19 @@ progressbar trough {
     border-right: 2px dashed $night3;
 }
 
+.app-label {
+    font-family: "Symbols Nerd Font";
+    margin: 3px;
+}
+
+.ws-label {
+    font-size: 20px;
+    padding: 2px;
+}
+
 .workspaces {
     button {
-        margin: 0px;
-        padding: 0px 10px;
+        background-color: $interactable;
     }
     .focused {
         background: $frost0;
@@ -103,6 +113,7 @@ progressbar trough {
     }
     .urgent {
         background: $aurora0;
+        color: $night0;
     }
 
 }

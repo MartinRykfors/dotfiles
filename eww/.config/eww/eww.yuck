@@ -24,15 +24,26 @@
                 :space-evenly true
                 :halign "start"
                 :spacing 2
-                (for entry in ws-defs
-                     (eventbox :cursor "pointer"
-                               (button :onclick "i3-msg workspace number ${entry.index}"
-                                       :class {entry.class}
-                                       "${entry.index}"
-                                       )))))
+                (for ws in ws-defs
+                     (workspace-item :ws ws))))
+
+(defwidget workspace-item [ws]
+           (eventbox :cursor "pointer"
+                     (button :onclick "i3-msg workspace number ${ws.num}"
+                             :class {ws.class}
+                             (box
+                              :space-evenly false
+                              (box :orientation "v"
+                                   :valign "start"
+                                   (label :class "ws-label" :text "${ws.num}"))
+                              (box :orientation "h"
+                                   (for icon in {ws.icons}
+                                        (label :class "app-label" :text "${icon}"))))
+                             )))
 
 (defwidget window-title []
-           (label :text "${current-window-title}"))
+           (box
+            (label :text "${current-window-title}")))
 
 (defwidget status []
            (box :orientation "h"

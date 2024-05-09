@@ -5,69 +5,109 @@ import sys
 import json
 import enum
 import os
+import jq
+import itertools
+
+icons = {
+    "firefox": "󰈹",
+    "code-oss": "󰨞",
+    "steam": "󰓓",
+    "Emacs": "",
+    "Nemo": "",
+    "Alacritty": "",
+    "Gimp": "",
+}
+default_icon = "󰣆"
+
+app_priority = [
+    "code-oss",
+    "Gimp",  # ends with -2.10
+    "obs",
+    "steam",
+    "Emacs",
+    "firefox",
+    "Nemo",
+    "Alacritty",
+]
 
 
-class WorkspaceState(enum.Enum):
-    EMPTY=0
-    USED=1
-    FOCUSED=2
+def weight(app):
+    try:
+        return next(i for i, x in enumerate(app_priority) if app.startswith(x))
+    except StopIteration:
+        return -1
+
 
 class Workspace:
-    def __init__(self):
-        self.state = WorkspaceState.EMPTY
+    def __init__(self, num, exists, focused, urgent, apps):
+        self.num = num
+        self.exists = exists
+        self.focused = focused
+        self.urgent = urgent
+        self.apps = apps
 
-workspaces = None
+    @property
+    def _class(self):
+        if self.focused:
+            return "focused"
+        if self.urgent:
+            return "urgent"
+        if self.exists:
+            return "exists"
+        return "empty"
 
-def state_str(ws):
-    return str(ws.state)
+    @property
+    def prioritized_apps(self):
+        weighted_apps = list(
+            itertools.islice(
+                sorted([(weight(app), app) for app in self.apps], key=lambda wa: wa[0]),
+                2,
+            )
+        )
+        return weighted_apps
+
+    @property
+    def icons(self):
+        return [icons.get(app[1], default_icon) for app in self.prioritized_apps]
+
+    def as_dict(self):
+        return {"num": self.num, "class": self._class, "icons": self.icons}
 
 
-def ws_class(ws):
-    if ws.state == WorkspaceState.EMPTY:
-        return "unused"
-    if ws.state == WorkspaceState.USED:
-        return "populated"
-    return "focused"
+jq_workspaces = jq.compile(".[] | {num: .num, urgent: .urgent, focused: .focused}")
+jq_tree = jq.compile(
+    'recurse(.nodes[]) | select(.type == "workspace" and .num >= 0) | {num: .num, apps: [recurse(.nodes[]) | select(.window) | .window_properties.class]}'
+)
 
 
-def initialise_workspaces():
-    p = subprocess.run(['i3-msg', '-t', 'get_workspaces'], capture_output=True)
-    states = json.loads(p.stdout)
-    workspaces = {}
-    workspaces = {ws: Workspace() for ws in [i for i in range(1,10)]}
-    for state in states:
-        workspaces[state['num']].state = WorkspaceState.USED
-        if state['focused']:
-            workspaces[state['num']].state = WorkspaceState.FOCUSED
-    js = [{'index': i, 'class': ws_class(ws)} for i, ws in workspaces.items()]
-    # No idea why print(...) does not suffice
+def update_workspaces():
+    workspaces = {i: Workspace(i, False, False, False, []) for i in range(1, 10)}
+    p = subprocess.run(["i3-msg", "-t", "get_workspaces"], capture_output=True)
+    for ws in jq_workspaces.input_text(p.stdout.decode("utf-8")).all():
+        workspaces[ws["num"]].exists = True
+        workspaces[ws["num"]].focused = ws["focused"]
+        workspaces[ws["num"]].urgent = ws["urgent"]
+
+    p = subprocess.run(["i3-msg", "-t", "get_tree"], capture_output=True)
+    for ws in jq_tree.input_text(p.stdout.decode("utf-8")).all():
+        workspaces[ws["num"]].apps = ws["apps"]
+
+    js = list([ws.as_dict() for ws in workspaces.values()])
     os.system(f"""echo '{json.dumps(js)}'""")
-    return workspaces
 
-def monitor_workspaces(workspaces):
+
+def monitor_i3_changes():
     process = subprocess.Popen(
-        ['i3-msg', '-t', 'subscribe', '-m', """[ "workspace" ]"""],
-        stdout=subprocess.PIPE
+        ["i3-msg", "-t", "subscribe", "-m", """[ "workspace", "window" ]"""],
+        stdout=subprocess.PIPE,
     )
     for line in iter(process.stdout.readline, b""):
-        o = json.loads(line)
-        change = o['change']
-        current = o['current']['num']
-        old = o['old']['num'] if o['old'] is not None else None
-        if change == "focus":
-            workspaces[current].state = WorkspaceState.FOCUSED
-            workspaces[old].state = WorkspaceState.USED
-        if change == 'init':
-            workspaces[current].state = WorkspaceState.USED
-        if change == 'empty':
-            workspaces[current].state = WorkspaceState.EMPTY
-        js = [{'index': i, 'class': ws_class(ws)} for i, ws in workspaces.items()]
-        os.system(f"""echo '{json.dumps(js)}'""")
+        update_workspaces()
 
 
 def main():
-    workspaces = initialise_workspaces()
-    monitor_workspaces(workspaces)
+    update_workspaces()
+    monitor_i3_changes()
 
 
 if __name__ == "__main__":
