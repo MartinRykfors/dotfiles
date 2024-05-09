@@ -104,6 +104,7 @@
               :space-evenly false
               (confirm-button :icon ""
                               :name "power"
+                              :tooltip "Power off"
                               :confirm-var power-confirm
                               :exec "systemctl poweroff")
               (revealer
@@ -113,14 +114,16 @@
                     :space-evenly false
                     (confirm-button :icon ""
                                     :name "reboot"
+                                    :tooltip "Reboot"
                                     :confirm-var reboot-confirm
                                     :exec "systemctl reboot")
                     (confirm-button :icon "󰒲"
                                     :name "sleep"
+                                    :tooltip "Sleep"
                                     :confirm-var sleep-confirm
                                     :exec "systemctl suspend")))))))
 
-(defwidget confirm-button [icon name confirm-var exec]
+(defwidget confirm-button [icon name confirm-var exec tooltip]
            (box
             :orientation "h"
             :space-evenly false
@@ -129,10 +132,12 @@
                       (eventbox :cursor "pointer"
                                 (button :class "power-button confirm"
                                         :onclick exec
+                                        :tooltip "Confirm ${tooltip}"
                                         "")))
             (eventbox :cursor "pointer"
                       (button :class "power-button"
                               :onclick `eww update ${name}-confirm=true`
+                              :tooltip tooltip
                               icon))))
 
 (defwidget kbd []
