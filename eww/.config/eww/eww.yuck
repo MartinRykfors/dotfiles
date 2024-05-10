@@ -212,13 +212,13 @@
                :class "music-text"
                :text "${currently-playing.album} (${currently-playing.year})")))))
 
-(defvar subtitle "kernel smash")
+(defvar subtitle "")
 (defwidget subtitles []
            (box
             :class "subtitle"
             :orientation "v"
             :valign "end"
-            (label :text "kernel smash")))
+            (label :text subtitle)))
 
 (defvar listen false)
 (defvar warn false)
