@@ -1,0 +1,95 @@
+#!/usr/bin/python3
+
+import os
+import requests
+import subprocess
+import xml.etree.ElementTree as ET
+import configparser
+import signal
+import time
+import logging
+import sys
+import json
+import os
+
+root = logging.getLogger()
+root.setLevel(logging.INFO)
+
+handler = logging.StreamHandler(sys.stdout)
+root.addHandler(handler)
+
+alive = True
+
+
+def finish(signum, frame):
+    global alive
+    set_module_text("")
+    logging.info("Received SIGTERM, stopping")
+    alive = False
+
+
+signal.signal(signal.SIGTERM, finish)
+
+
+def load_config():
+    config_home = os.environ.get("XDG_CONFIG_HOME")
+    if not config_home:
+        config_home = os.path.expanduser("~/.config")
+    config_path = os.path.join(config_home, "navidrome-status", "config.ini")
+    config = configparser.ConfigParser()
+    config.read(config_path)
+    return {
+        "username": config["Settings"]["username"],
+        "password": config["Settings"]["password"],
+        "refresh_interval": int(config["Settings"]["refresh_interval"]),
+    }
+
+
+def main():
+    config = load_config()
+    username = config["username"]
+    password = config["password"]
+    refresh_interval = config["refresh_interval"]
+    url = "http://localhost:4533/rest/getNowPlaying"
+    params = {"u": username, "c": "navidrome-status", "p": password, "v": "1.0.0"}
+    last_payload = {}
+    while alive:
+        response = requests.get(url, params=params)
+        response.encoding = 'utf-8'
+        root = ET.fromstring(response.text)
+        status = root.attrib["status"]
+        if status != "ok":
+            logging.debug("Error: Navidrome status: {}".format(status))
+            set_module_text("")
+            time.sleep(refresh_interval)
+            continue
+
+        entry = root.findall(
+            f".//{{http://subsonic.org/restapi}}entry[@username='{username}']"
+        )
+        if not entry:
+            logging.debug("Nothing currently playing")
+            os.system(f"""echo '{json.dumps(False)}'""")
+            last_payload = {}
+            time.sleep(refresh_interval)
+            continue
+
+        entry = entry[0]
+        year = entry.attrib.get('year', None)
+        artist = entry.attrib.get('artist', None)
+        title = entry.attrib.get('title', None)
+        album = entry.attrib.get('album', None)
+        if (artist is None) or (title is None):
+            logging.debug("Missing artist or title data")
+            time.sleep(refresh_interval)
+            continue
+
+        payload = {'artist': artist, 'title': title, 'album': album, 'year': year}
+        if payload != last_payload:
+            os.system(f"""echo '{json.dumps(payload)}'""")
+            last_payload = payload
+        time.sleep(refresh_interval)
+
+
+if __name__ == "__main__":
+    main()

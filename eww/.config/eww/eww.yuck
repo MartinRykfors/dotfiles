@@ -181,27 +181,36 @@
                 :halign "center"
                 (label :text {formattime (EWW_TIME, "%Y-%m-%d %H:%M")})))
 
-(defvar currently-playing "{\"artist\": \"Artist\", \"track\": \"Track\", \"album\": \"Album\", \"year\": \"2020\"}")
+(deflisten currently-playing :initial "false"
+           `scripts/currently-playing`)
 
 (defwidget music []
            (box
             :orientation "h"
             :halign "start"
-            :class "item-container"
-            (box
+            :class "music-container"
+            :visible {currently-playing != "false"}
+            (centerbox
              :orientation "v"
-             :valign "end"
+             :valign "center"
              :space-evenly false
              (box
               :orientation "h"
               :halign "start"
               :space-evenly false
-              (label :text "${currently-playing.artist} - ${currently-playing.track}"))
+              :class "music-row"
+              (label
+               :class "music-text"
+               :text "${currently-playing.artist} - ${currently-playing.title}"))
+             (box)
              (box
               :orientation "h"
               :halign "start"
               :space-evenly false
-              (label :text "${currently-playing.album} (${currently-playing.year})")))))
+              :class "music-row"
+              (label
+               :class "music-text"
+               :text "${currently-playing.album} (${currently-playing.year})")))))
 
 (defvar subtitle "kernel smash")
 (defwidget subtitles []
