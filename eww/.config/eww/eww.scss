@@ -16,6 +16,7 @@ $aurora3: #a3be8c;
 $aurora4: #b48ead;
 
 $background: $night0;
+$background-highlight: $night3;
 
 * {
     all: unset;
@@ -30,7 +31,7 @@ $background: $night0;
 
 .power-button {
     padding: 10px;
-    background: $night1;
+    background: $background-highlight;
 }
 
 
@@ -42,7 +43,7 @@ $background: $night0;
 
 .item-container {
     padding: 0px 10px 0px 10px;
-    background: $night1;
+    background: $background-highlight;
     margin: 0px 0px 0px 2px;
 }
 
@@ -103,7 +104,7 @@ progressbar trough {
 }
 
 .ws-label {
-    font-size: 20px;
+    font-size: 17px;
     padding: 2px;
 }
 
@@ -113,20 +114,18 @@ progressbar trough {
 
 
 .workspaces {
-    button {
-        background-color: $night1;
-    }
     .focused {
-        background: $frost0;
+        background: $snow0;
         color: $night0;
     }
 
-    .populated {
+    .exists {
+        background: $background-highlight;
         color: $snow0;
     }
     .empty {
-        background: $night0;
-        color: $night3;
+        background: $night1;
+        color: $snow0;
     }
     .urgent {
         background: $aurora0;
@@ -136,7 +135,7 @@ progressbar trough {
 
 .music-container {
     padding: 0px 10px 0px 10px;
-    background: $night1;
+    background: $background-highlight;
 }
 
 .music-text {
