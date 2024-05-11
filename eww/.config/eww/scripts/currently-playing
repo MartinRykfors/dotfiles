@@ -69,7 +69,7 @@ def main():
         )
         if not entry:
             logging.debug("Nothing currently playing")
-            os.system(f"""echo '{json.dumps(False)}'""")
+            subprocess.check_call(['echo', json.dumps(False)])
             last_payload = {}
             time.sleep(refresh_interval)
             continue
@@ -86,7 +86,7 @@ def main():
 
         payload = {'artist': artist, 'title': title, 'album': album, 'year': year}
         if payload != last_payload:
-            os.system(f"""echo '{json.dumps(payload)}'""")
+            subprocess.check_call(['echo', json.dumps(payload)])
             last_payload = payload
         time.sleep(refresh_interval)
 
