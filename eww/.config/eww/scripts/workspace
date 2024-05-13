@@ -61,7 +61,7 @@ class Workspace:
         weighted_apps = list(
             itertools.islice(
                 sorted([(weight(app), app) for app in self.apps], key=lambda wa: wa[0]),
-                2,
+                3,
             )
         )
         return weighted_apps

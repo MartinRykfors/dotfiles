@@ -32,25 +32,29 @@
 (defwidget workspaces []
            (box :class "workspaces"
                 :orientation "h"
-                :space-evenly true
+                :space-evenly false
                 :halign "start"
                 :spacing 2
                 (for ws in ws-defs
                      (workspace-item :ws ws))))
 
 (defwidget workspace-item [ws]
-           (eventbox :cursor "pointer"
-                     (button :onclick "i3-msg workspace number ${ws.num}"
-                             :class "ws-button ${ws.class}"
-                             (box
-                              :space-evenly false
-                              (box :orientation "v"
-                                   :valign "start"
-                                   (label :class "ws-label" :text "${ws.num}"))
-                              (box :orientation "h"
-                                   (for icon in {ws.icons}
-                                        (label :class "app-label" :text "${icon}"))))
-                             )))
+           (eventbox
+            :cursor "pointer"
+            (button
+             :onclick "i3-msg workspace number ${ws.num}"
+             :class "ws-button ${ws.class}"
+             (box
+              :orientation "v"
+              :space-evenly false
+              (box
+               :halign "start"
+               (label :class "ws-label" :text "${ws.num}"))
+              (box
+               :orientation "h"
+               :halign "center"
+               (for icon in {ws.icons}
+                    (label :class "app-label" :text "${icon}")))))))
 
 (defwidget window-title []
            (box

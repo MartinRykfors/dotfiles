@@ -100,16 +100,18 @@ progressbar trough {
 
 .app-label {
     font-family: "Symbols Nerd Font";
-    margin: 3px;
+    font-size: 20px;
+    margin: 0px 2px 0px 2px;
 }
 
 .ws-label {
-    font-size: 17px;
-    padding: 2px;
+    font-size: 15px;
+    padding: 2px 0px 0px 2px;
 }
 
 .ws-button {
     padding: 1px;
+    min-width: 28px;
 }
 
 
