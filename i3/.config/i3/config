@@ -106,11 +106,10 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# split in horizontal orientation
-bindsym $mod+t split h
-
-# split in vertical orientation
-bindsym $mod+s split v
+# split manipulation
+bindsym $mod+s split h
+bindsym $mod+n split v
+bindsym $mod+t split toggle
 
 # enter fullscreen mode for the focused container
 bindsym $mod+u fullscreen toggle
@@ -133,14 +132,11 @@ bindsym $mod+a focus parent
 bindsym $mod+Shift+a focus child
 
 # send to and recall from scratchpad
-bindsym $mod+Tab move scratchpad
-bindsym $mod+Shift+Tab scratchpad show
-bindsym $mod+0 move scratchpad
-bindsym $mod+Shift+0 scratchpad show
+bindsym $mod+0 scratchpad show
+bindsym $mod+Shift+0 move scratchpad
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-# 
 set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
@@ -213,13 +209,6 @@ mode "resize" {
 }
 
 bindsym $mod+i mode "resize"
-
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-# bar {
-#         status_command i3status
-#         separator_symbol "    "
-# }
 
 set $night0  #2e3440
 set $night1  #3b4252
