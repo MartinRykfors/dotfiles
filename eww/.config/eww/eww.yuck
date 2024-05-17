@@ -58,7 +58,9 @@
 
 (defwidget window-title []
            (box
-            (label :text "${current-window-title}")))
+            (label
+             :text "${current-window-title}"
+             :limit-width 80)))
 
 (defwidget status []
            (box :orientation "h"
