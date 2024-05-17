@@ -62,7 +62,9 @@
                :orientation "h"
                :halign "center"
                (for icon in {ws.icons}
-                    (label :class "app-label" :text "${icon}")))))))
+                    (label
+                     :class "app-label icon-${icon.color}"
+                     :text "${icon.symbol}")))))))
 
 (defwidget window-title []
            (box

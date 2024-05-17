@@ -13,11 +13,20 @@ icons = {
     "code-oss": "󰨞",
     "steam": "󰓓",
     "Emacs": "",
-    "Nemo": "",
+    "Nemo": "",
     "Alacritty": "",
     "Gimp": "",
 }
 default_icon = "󰣆"
+
+icon_colors = {
+    "firefox": "orange",
+    "code-oss": "dark-blue",
+    "Emacs": "purple",
+    "Nemo": "yellow",
+    "Alacritty": "green",
+}
+default_color = "white"
 
 app_priority = [
     "code-oss",
@@ -68,7 +77,13 @@ class Workspace:
 
     @property
     def icons(self):
-        return [icons.get(app[1], default_icon) for app in self.prioritized_apps]
+        return [
+            {
+                "symbol": icons.get(app[1], default_icon),
+                "color": icon_colors.get(app[1], default_color),
+            }
+            for app in self.prioritized_apps
+        ]
 
     def as_dict(self):
         return {"num": self.num, "class": self._class, "icons": self.icons}

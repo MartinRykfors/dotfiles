@@ -124,6 +124,33 @@ progressbar trough {
     .exists {
         background: $background-highlight;
         color: $snow0;
+
+        .icon-red {
+            color: $aurora0;
+        }
+        .icon-orange {
+            color: $aurora1;
+        }
+        .icon-yellow {
+            color: $aurora2;
+        }
+        .icon-green {
+            color: $aurora3;
+        }
+        .icon-purple {
+            color: $aurora4;
+        }
+        .icon-blue {
+            color: $frost1;
+        }
+        .icon-dark-blue {
+            color: $frost3;
+        }
+        .icon-white {
+            color: $snow0;
+        }
+
+
     }
     .empty {
         background: $night1;
@@ -134,6 +161,7 @@ progressbar trough {
         color: $night0;
     }
 }
+
 
 .music-container {
     padding: 0px 10px 0px 10px;
