@@ -1,10 +1,9 @@
 
 (defwidget bar []
-           (centerbox :orientation "h"
-                      :class "bar"
-                      (workspaces)
-                      (window-title)
-                      (status)))
+           (box :orientation "h"
+                :class "bar"
+                (workspaces)
+                (status)))
 
 (defwidget bottom-bar []
            (centerbox :orientation "h"
@@ -30,13 +29,22 @@
            `scripts/current-window`)
 
 (defwidget workspaces []
-           (box :class "workspaces"
-                :orientation "h"
-                :space-evenly false
-                :halign "start"
-                :spacing 2
-                (for ws in ws-defs
-                     (workspace-item :ws ws))))
+           (box
+            :halign "start"
+            :orientation "h"
+            :space-evenly false
+            (box :class "workspaces"
+                 :orientation "h"
+                 :space-evenly false
+                 :halign "start"
+                 :spacing 2
+                 (for ws in ws-defs
+                      (workspace-item :ws ws)))
+            (box
+             :orientation "h"
+             :halign "start"
+             :class "item-container"
+             (window-title))))
 
 (defwidget workspace-item [ws]
            (eventbox
@@ -58,9 +66,11 @@
 
 (defwidget window-title []
            (box
+            :orientation "h"
+            :halign "start"
             (label
              :text "${current-window-title}"
-             :limit-width 80)))
+             :limit-width 100)))
 
 (defwidget status []
            (box :orientation "h"
