@@ -43,7 +43,7 @@
             (box
              :orientation "h"
              :halign "start"
-             :class "item-container"
+             :class "window-title-container"
              (window-title))))
 
 (defwidget workspace-item [ws]
