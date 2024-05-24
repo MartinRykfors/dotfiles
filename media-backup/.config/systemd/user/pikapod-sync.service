@@ -1,0 +1,7 @@
+[Unit]
+Description=Run media library rclone sync to pikapod
+
+[Service]
+Type=oneshot
+RemainAfterExit=false
+ExecStart=rclone sync /srv/media/music pikapod:music
