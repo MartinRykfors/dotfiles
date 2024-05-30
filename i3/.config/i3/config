@@ -174,7 +174,15 @@ bindsym $mod+Shift+9 move container to workspace number $ws9
 # assign [class="discord"] $ws9
 assign [class="steam"] $ws9
 
+
 for_window [title="Picture-in-Picture"] sticky enable
+
+# streaming autosetup
+assign [class="calfjackhost"] $ws4
+for_window [class="calfjackhost"] floating disable
+assign [class="Chromium"] $ws6
+assign [class="obs"] $ws3
+assign [class="qpwgraph"] $ws3
 
 # reload the configuration file
 bindsym $mod+Shift+J reload

@@ -16,6 +16,10 @@ icons = {
     "Nemo": "",
     "Alacritty": "",
     "Gimp": "",
+    "Chromium":"",
+    "obs": "",
+    "qpwgraph": "󰴽",
+    "calfjackhost": "",
 }
 default_icon = "󰣆"
 
@@ -25,6 +29,8 @@ icon_colors = {
     "Emacs": "purple",
     "Nemo": "yellow",
     "Alacritty": "green",
+    "Chromium":"blue",
+    "obs": "purple",
 }
 default_color = "white"
 
