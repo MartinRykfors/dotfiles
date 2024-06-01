@@ -1,0 +1,9 @@
+# Copy to /etc/systemd/system, then enable
+[Unit]
+Description="Make suspend ignore USB wake up on XHC2"
+
+[Service]
+ExecStart=/bin/bash -c "echo XHC2 >> /proc/acpi/wakeup"
+
+[Install]
+WantedBy=multi-user.target
