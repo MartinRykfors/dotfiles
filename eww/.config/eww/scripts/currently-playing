@@ -60,7 +60,10 @@ def main():
         status = root.attrib["status"]
         if status != "ok":
             logging.debug("Error: Navidrome status: {}".format(status))
-            set_module_text("")
+            payload = False
+            if payload != last_payload:
+                subprocess.check_call(['echo', json.dumps(False)])
+                last_payload = payload
             time.sleep(refresh_interval)
             continue
 
@@ -69,8 +72,10 @@ def main():
         )
         if not entry:
             logging.debug("Nothing currently playing")
-            subprocess.check_call(['echo', json.dumps(False)])
-            last_payload = {}
+            payload = False
+            if payload != last_payload:
+                subprocess.check_call(['echo', json.dumps(False)])
+                last_payload = payload
             time.sleep(refresh_interval)
             continue
 
