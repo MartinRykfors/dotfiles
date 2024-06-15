@@ -12,4 +12,4 @@ Credit: NASA/SDO
 Taken from https://www.flickr.com/photos/nasacommons/23519116918/in/album-72157650651232765/
 No known copyright restrictions
 Modified using imagemagick:
-magick img.jpg -colorspace Gray -normalize -fill '#8fbcbb' -tint 120 +level-colors '#2e3440','#eceff4' sun.jpg
+magick img.jpg -colorspace Gray -fill '#88c0d0 -tint 120 +level-colors '#2e3440','#eceff4' sun.jpg
