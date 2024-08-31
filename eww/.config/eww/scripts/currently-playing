@@ -41,6 +41,7 @@ def load_config():
     return {
         "username": config["Settings"]["username"],
         "password": config["Settings"]["password"],
+        "url": config["Settings"]["url"],
         "refresh_interval": int(config["Settings"]["refresh_interval"]),
     }
 
@@ -50,11 +51,19 @@ def main():
     username = config["username"]
     password = config["password"]
     refresh_interval = config["refresh_interval"]
-    url = "http://localhost:4533/rest/getNowPlaying"
+    url = config["url"]
     params = {"u": username, "c": "navidrome-status", "p": password, "v": "1.0.0"}
     last_payload = {}
     while alive:
-        response = requests.get(url, params=params)
+        try:
+            response = requests.get(url, params=params)
+        except requests.exceptions.ConnectionError:
+            payload = False
+            if payload != last_payload:
+                subprocess.check_call(['echo', json.dumps(False)])
+                last_payload
+            time.sleep(refresh_interval * 2)
+            continue
         response.encoding = 'utf-8'
         root = ET.fromstring(response.text)
         status = root.attrib["status"]

@@ -3,3 +3,4 @@
 username=
 password=
 refresh_interval=2
+url=https://my.domain.net/rest/getNowPlaying
