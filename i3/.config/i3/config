@@ -71,11 +71,13 @@ bindsym $mod+Shift+f exec --no-startup-id nemo
 # .desktop file. It is a wrapper around dmenu, so you need that installed.
 bindsym $mod+Shift+Return exec --no-startup-id rofi -show drun
 
-bindsym $mod+Shift+Delete exec --no-startup-id ~/.config/rofi/rofi_power_menu.sh
+bindsym $mod+Delete exec --no-startup-id flameshot gui
+bindsym $mod+Shift+Delete exec --no-startup-id flameshot launcher
 
 # kill focused window
 bindsym $mod+Shift+quotedbl kill
 
+# flameshot gui
 
 set $go_n h
 set $go_w b
