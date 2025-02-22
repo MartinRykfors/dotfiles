@@ -1,0 +1,9 @@
+[Unit]
+Description=RPC server that controls wacom profiles and screen region mappings
+
+[Service]
+Type=simple
+ExecStart=python %h/lib/wacom/wacom_server.py
+
+[Install]
+WantedBy=default.target

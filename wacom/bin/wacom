@@ -1,0 +1,25 @@
+#! /usr/bin/python
+
+import argparse
+import xmlrpc.client
+
+if __name__ == "__main__":
+    client = xmlrpc.client.ServerProxy("http://localhost:8090")
+
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(required=True, dest='command')
+
+    parser_region = subparsers.add_parser('region')
+    parser_region.add_argument('action', choices=['toggle'])
+
+    parser_profile = subparsers.add_parser('profile')
+    parser_profile.add_argument('profile_name')
+
+    args = parser.parse_args()
+    print(args)
+    if args.command == "profile":
+        print("setting profile")
+        client.set_profile(args.profile_name)
+    elif args.command == "region":
+        print('toggling region')
+        client.toggle_region()

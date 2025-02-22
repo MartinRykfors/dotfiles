@@ -79,7 +79,7 @@ bindsym $mod+Shift+Delete exec --no-startup-id flameshot launcher
 bindsym $mod+Shift+quotedbl kill
 
 # Toggle low/high resolution on wacom
-bindsym $mod+F12 exec ~/code/dotfiles/wacom/bin/wacom_region.py
+bindsym $mod+F12 exec ~/bin/wacom region toggle
 
 
 set $go_n h
