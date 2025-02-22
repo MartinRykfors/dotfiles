@@ -252,6 +252,6 @@ client.background       #ffffff
 
 exec firefox
 exec_always --no-startup-id ~/.config/eww/launch.sh
-exec_always --no-startup-id feh --bg-fill ~/backgrounds/sun.jpg
+exec_always --no-startup-id feh --bg-fill ~/backgrounds/glass_array_4.png
 exec_always --no-startup-id picom  -b --config ~/.config/picom/picom.conf
 exec --no-startup-id systemctl --user start i3-session.service

@@ -13,3 +13,7 @@ Taken from https://www.flickr.com/photos/nasacommons/23519116918/in/album-721576
 No known copyright restrictions
 Modified using imagemagick:
 magick img.jpg -colorspace Gray -fill '#88c0d0 -tint 120 +level-colors '#2e3440','#eceff4' sun.jpg
+
+
+Glass Array 4
+Copyright 2024 Martin Rykfors
