@@ -80,7 +80,7 @@ bindsym $mod+Shift+quotedbl kill
 
 # Toggle low/high resolution on wacom
 bindsym $mod+F12 exec ~/bin/wacom region toggle
-
+bindsym $mod+F11 exec echo -e "krita\nblender" | rofi -dmenu | xargs -I{} ~/bin/wacom profile {}
 
 set $go_n h
 set $go_w b
