@@ -8,8 +8,14 @@ screen_h = 1440
 class Region:
     def __init__(self):
         self.percentage = 100
+        self.outline_proc = None
+        print("instantiating region")
 
     def toggle(self):
+        if self.outline_proc is not None:
+            self.outline_proc.terminate()
+            self.outline_proc = None
+
         percentage = 50 if self.percentage == 100 else 100
         print("toggling to ", percentage)
 
@@ -24,5 +30,13 @@ class Region:
         subprocess.check_call(
             ["xsetwacom", "set", "Wacom Intuos Pro S Pen stylus", "MapToOutput", spec]
         )
+        if percentage != 100:
+            if self.outline_proc is None:
+                print("starting outliner")
+                self.outline_proc = subprocess.Popen(
+                    ["uv", "run", "--with", 'ewmh', "/home/rykarn/lib/wacom/wacom_overlay.py", spec]
+                )
+                print("outliner running", self.outline_proc.pid)
+
         self.percentage = percentage
         return True
