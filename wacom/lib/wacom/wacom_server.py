@@ -21,6 +21,7 @@ if __name__ == "__main__":
     # Want: a config
     #       port number
     #       profiles
+    set_profile('blender')
     server = SimpleXMLRPCServer(("localhost", 8090))
     region = wacom_region.Region()
 

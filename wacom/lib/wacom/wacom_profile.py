@@ -67,10 +67,10 @@ def set_pressure_curve(a, b, c, d):
             "set",
             "Wacom Intuos Pro S Pen stylus",
             "PressureCurve",
-            a,
-            b,
-            c,
-            d,
+            str(a),
+            str(b),
+            str(c),
+            str(d),
         ]
     )
 
