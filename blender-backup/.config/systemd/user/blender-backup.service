@@ -1,0 +1,7 @@
+[Unit]
+Description=Run blender project files rsync backup to T7Shield
+
+[Service]
+Type=oneshot
+RemainAfterExit=false
+ExecStart=rsync -av --delete %h/blender /run/media/rykarn/T7Shield/blender_backup
